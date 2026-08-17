@@ -695,14 +695,35 @@ function InvoiceModal({ bill, paid, onClose }) {
   const balance = Math.round((bill.total - paid) * 100) / 100;
 
   function share() {
-    const lines = bill.lines.map((l) => `${l.itemName} - ${fmtQty(l.qty)} ${l.unit} x ${fmtMoney(l.rate)} = ${fmtMoney(l.qty * l.rate)}`).join("\n");
-    const text = `New Kerala Chips\nInvoice #${bill.billNo} · ${bill.date}\n${bill.party ? "Customer: " + bill.party + "\n" : ""}\n${lines}\n\nTotal: ${fmtMoney(bill.total)}\nPaid: ${fmtMoney(paid)}\nBalance: ${fmtMoney(balance)}`;
-    if (navigator.share) {
-      navigator.share({ title: `Invoice #${bill.billNo}`, text }).catch(() => {});
-    } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(text);
-    }
-  }
+  const lines = bill.lines
+    .map(
+      (l) =>
+        `${l.itemName} - ${fmtQty(l.qty)} ${l.unit} x ${fmtMoney(
+          l.rate
+        )} = ${fmtMoney(l.qty * l.rate)}`
+    )
+    .join("\n");
+
+  const text =
+    `New Kerala Chips\n` +
+    `Invoice #${bill.billNo} · ${bill.date}\n` +
+    (bill.party ? `Customer: ${bill.party}\n` : "") +
+    (bill.partyPhone ? `Phone: ${bill.partyPhone}\n` : "") +
+    `\n${lines}\n\n` +
+    `Total: ${fmtMoney(bill.total)}\n` +
+    `Paid: ${fmtMoney(paid)}\n` +
+    `Balance: ${fmtMoney(balance)}\n\n` +
+    `Thank you for your business`;
+
+  const digits = String(bill.partyPhone || "").replace(/\D/g, "");
+  const phone = digits.length === 10 ? `91${digits}` : digits;
+
+  const url = phone
+    ? `https://wa.me/${phone}?text=${encodeURIComponent(text)}`
+    : `https://wa.me/?text=${encodeURIComponent(text)}`;
+
+  window.open(url, "_blank");
+}
 
   function print() {
     window.print();
