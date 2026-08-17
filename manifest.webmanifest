@@ -1,0 +1,9 @@
+{
+  "name": "New Kerala Chips - Stock & Billing",
+  "short_name": "NKC Billing",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF6EC",
+  "theme_color": "#C0392B",
+  "description": "New Kerala Chips stock and billing application"
+}
