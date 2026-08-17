@@ -661,7 +661,7 @@ function DuesTab({ data, persist, showToast, paidByBill, onOpenInvoice }) {
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 10 }}>
-              {c.bills.filter((b) => b.balance > 0.009).map((b) => (
+              {c.bills.map((b) => (
                 <div key={b.billId} style={{ ...S.billCard, background: "#FBF6EC" }}>
                   <div style={S.billCardHead}>
                     <span>#{b.billNo} · {b.date}</span>
