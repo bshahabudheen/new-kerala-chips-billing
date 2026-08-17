@@ -69,7 +69,6 @@ if (stored) {
 } else {
   setData(emptyData);
 }
-        }
       } catch (e) {
         setData(emptyData);
       } finally {
