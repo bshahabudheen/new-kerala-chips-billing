@@ -62,11 +62,13 @@ export default function App() {
     (async () => {
       try {
         const stored = await readNKCStorage(STORAGE_KEY);
-        if (res && res.value) {
-          const parsed = JSON.parse(res.value);
-          setData({ ...emptyData, ...parsed });
-        } else {
-          setData(emptyData);
+
+if (stored) {
+  const parsed = JSON.parse(stored);
+  setData({ ...emptyData, ...parsed });
+} else {
+  setData(emptyData);
+}
         }
       } catch (e) {
         setData(emptyData);
